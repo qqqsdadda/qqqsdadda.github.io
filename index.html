@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>恒富启（上海）金融 - 不良资产化债服务</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        /* 全局样式（黑金色基调） */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #000;
+            color: #F5DEB3;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* 步骤容器 */
+        .step-wrapper {
+            display: none;
+            background-color: #1A1A1A;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            border: 2px solid #D4AF37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .step-wrapper.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        /* 标题样式 */
+        h2 {
+            color: #D4AF37;
+            font-size: 28px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #D4AF37;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+        h3 {
+            color: #F5DEB3;
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        /* 按钮样式（黑金渐变） */
+        .btn {
+            background: linear-gradient(45deg, #D4AF37, #8B7355);
+            color: #000;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn:hover {
+            background: linear-gradient(45deg, #F5DEB3, #D4AF37);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        /* 输入框/单选框样式 */
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            background-color: #222;
+            border: 2px solid #D4AF37;
+            color: #F5DEB3;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #F5DEB3;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        input[type="radio"] {
+            margin: 0 10px;
+            accent-color: #D4AF37;
+            transform: scale(1.2);
+        }
+        .radio-group {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #222;
+            border-radius: 8px;
+            border: 1px solid #D4AF37;
+        }
+        .radio-group label {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .radio-group label:hover {
+            background-color: #333;
+            border-radius: 5px;
+        }
+        /* 结果展示区 */
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            border-left: 4px solid #D4AF37;
+            color: #FFFFFF;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        /* logo和首页样式 */
+        .step1 {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            border: 3px solid #D4AF37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1A1A1A;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+        }
+        .logo img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .contact {
+            margin-top: 30px;
+            color: #F5DEB3;
+            font-size: 18px;
+            line-height: 2;
+        }
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .step-wrapper {
+                padding: 25px;
+                margin: 10px 0;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            .btn {
+                padding: 12px 25px;
+                font-size: 14px;
+                margin: 8px 5px;
+            }
+            .logo {
+                width: 150px;
+                height: 150px;
+            }
+            .logo img {
+                width: 130px;
+                height: 130px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 步骤1：首页引导（品牌展示） -->
+        <div class="step-wrapper step1 active" id="step1">
+            <div class="logo pulse">
+                <img src="hengfuqi_logo.png" alt="恒富启金融" />
+            </div>
+            <h2>不良资产专业化债服务</h2>
+            <p style="font-size: 18px; margin: 20px 0;">依托全产业链资源，为您定制银行/非银债务最优解决方案</p>
+            <button class="btn" onclick="nextStep(1)">开始定制方案</button>
+            <div class="contact">
+                <p>☎ 咨询热线：18221566053</p>
+                <p>💬 微信：xiaofu15796</p>
+            </div>
+        </div>
+
+        <!-- 步骤2：业务类型选择 -->
+        <div class="step-wrapper" id="step2">
+            <h2>选择债务类型</h2>
+            <div class="radio-group">
+                <label><input type="radio" name="debtType" value="bank" checked> 银行债务（信用卡/网贷）</label>
+                <label><input type="radio" name="debtType" value="nonBank"> 非银行债务（亲友/企业/客户欠款）</label>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="prevStep(2)">返回</button>
+                <button class="btn" onclick="nextStep(2)">下一步</button>
+            </div>
+        </div>
+
+        <!-- 步骤3：场景选择 -->
+        <div class="step-wrapper" id="step3">
+            <h2>选择化债场景</h2>
+            <div class="radio-group" id="sceneGroup">
+                <!-- 银行债务场景 -->
+                <div id="bankScene">
+                    <label><input type="radio" name="scene" value="bankCore" checked> 核心化债（有钱+有还款意愿）</label>
+                    <label><input type="radio" name="scene" value="bankSurround"> 周边化债（暂时没钱，争取时间）</label>
+                </div>
+                <!-- 非银债务场景（默认隐藏） -->
+                <div id="nonBankScene" style="display: none;">
+                    <label><input type="radio" name="scene" value="nonBankCore" checked> 核心化债（有钱+有还款意愿）</label>
+                    <label><input type="radio" name="scene" value="nonBankSurround"> 周边化债（暂时没钱，争取时间）</label>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="prevStep(3)">返回</button>
+                <button class="btn" onclick="nextStep(3)">下一步</button>
+            </div>
+        </div>
+
+        <!-- 步骤4：计算器（分银行/非银、核心/周边） -->
+        <div class="step-wrapper" id="step4">
+            <!-- 银行核心化债计算器 -->
+            <div id="bankCoreCalc">
+                <h2>银行债务核心化债计算</h2>
+                <p style="color: #D4AF37; margin-bottom: 15px;">注：金额以网贷/信用卡APP客服确认金额为准</p>
+                <input type="number" id="bankDebt" placeholder="请输入总欠款金额（元）" min="0">
+                <div class="radio-group">
+                    <label><input type="radio" name="bankPayType" value="once" checked> 一次性结清</label>
+                    <label><input type="radio" name="bankPayType" value="installment"> 分期还款（每期≥3000元）</label>
+                </div>
+                <div style="text-align: center;">
+                    <button class="btn" onclick="calcBankCore()">计算方案</button>
+                </div>
+                <div class="result" id="bankCoreResult"></div>
+            </div>
+            <!-- 银行周边化债说明（无计算） -->
+            <div id="bankSurroundCalc" style="display: none;">
+                <h2>银行债务周边化债说明</h2>
+                <p style="color: #D4AF37; margin-bottom: 20px;">董事长评语：这部分方案本质上是为债务人争取时间，安心赚钱，最终来联系我们减免还款</p>
+                <div style="background-color: #222; padding: 20px; border-radius: 10px; border-left: 4px solid #D4AF37;">
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin: 10px 0;">✓ 服务内容：延期1年以上还款 / 最长分5年分期（需审核）</li>
+                        <li style="margin: 10px 0;">✓ 服务费用：300~1500元（根据欠款总额审核）</li>
+                        <li style="margin: 10px 0;">✓ 核心优势：服务期间可随时申请债务减免还款</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 非银核心化债计算器 -->
+            <div id="nonBankCoreCalc" style="display: none;">
+                <h2>非银行债务核心化债计算</h2>
+                <p style="color: #D4AF37; margin-bottom: 15px;">注：金额以法院调解书/判决书金额为准</p>
+                <input type="number" id="nonBankDebt" placeholder="请输入总欠款金额（元）" min="0">
+                <div class="radio-group">
+                    <label><input type="radio" name="depositRate" value="3" checked> 保证金3%（23期，每期3个月）</label>
+                    <label><input type="radio" name="depositRate" value="5"> 保证金5%（20期，每期3个月）</label>
+                    <label><input type="radio" name="depositRate" value="10"> 保证金10%（10期，每期2个月）</label>
+                    <label><input type="radio" name="depositRate" value="20"> 保证金20%（5期，每期2个月）</label>
+                </div>
+                <div style="text-align: center;">
+                    <button class="btn" onclick="calcNonBankCore()">计算方案</button>
+                </div>
+                <div class="result" id="nonBankCoreResult"></div>
+            </div>
+            <!-- 非银周边化债说明（无计算） -->
+            <div id="nonBankSurroundCalc" style="display: none;">
+                <h2>非银行债务周边化债说明</h2>
+                <p style="color: #D4AF37; margin-bottom: 20px;">董事长评语：这部分方案本质上是为债务人争取时间，安心赚钱，最终来联系我们减免还款</p>
+                <div style="background-color: #222; padding: 20px; border-radius: 10px; border-left: 4px solid #D4AF37;">
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin: 10px 0;">✓ 服务内容：资产保全（防拍卖）、解冻微信/支付宝、代理民间借贷官司</li>
+                        <li style="margin: 10px 0;">✓ 核心优势：有钱后支付小额保证金，即可启动全额代偿</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="prevStep(4)">返回</button>
+                <button class="btn" onclick="nextStep(4)">获取对接方案</button>
+            </div>
+        </div>
+
+        <!-- 步骤5：对接留资 -->
+        <div class="step-wrapper" id="step5">
+            <h2>对接专属顾问</h2>
+            <p style="font-size: 18px; margin-bottom: 25px;">您的方案已生成，可联系我们获取详细落地细则</p>
+            <div class="contact" style="background-color: #222; padding: 30px; border-radius: 10px; border-left: 4px solid #D4AF37;">
+                <p style="font-size: 20px; margin: 15px 0;">☎ 咨询热线：18221566053</p>
+                <p style="font-size: 20px; margin: 15px 0;">💬 微信：xiaofu15796</p>
+                <p style="font-size: 20px; margin: 15px 0;">📍 对接地址：恒富启（上海）金融分公司</p>
+            </div>
+            <p style="margin-top: 25px; color: #D4AF37; font-size: 16px; text-align: center;">注：集团名称因商业机密，签订正式服务合同前保密</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="prevStep(5)">返回重新计算</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 步骤切换核心函数
+        let currentDebtType = "bank";
+        let currentScene = "bankCore";
+
+        // 下一步
+        function nextStep(step) {
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step+1}`).classList.add('active');
+            
+            // 步骤2→3：根据债务类型切换场景选项
+            if (step === 2) {
+                currentDebtType = document.querySelector('input[name="debtType"]:checked').value;
+                if (currentDebtType === "bank") {
+                    document.getElementById("bankScene").style.display = "block";
+                    document.getElementById("nonBankScene").style.display = "none";
+                } else {
+                    document.getElementById("bankScene").style.display = "none";
+                    document.getElementById("nonBankScene").style.display = "block";
+                }
+            }
+            
+            // 步骤3→4：根据场景切换计算器
+            if (step === 3) {
+                currentScene = document.querySelector('input[name="scene"]:checked').value;
+                // 隐藏所有计算器
+                document.getElementById("bankCoreCalc").style.display = "none";
+                document.getElementById("bankSurroundCalc").style.display = "none";
+                document.getElementById("nonBankCoreCalc").style.display = "none";
+                document.getElementById("nonBankSurroundCalc").style.display = "none";
+                // 显示对应计算器
+                document.getElementById(`${currentScene}Calc`).style.display = "block";
+            }
+            
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 上一步
+        function prevStep(step) {
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step-1}`).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 银行核心化债计算
+        function calcBankCore() {
+            const debt = Number(document.getElementById("bankDebt").value);
+            const payType = document.querySelector('input[name="bankPayType"]:checked').value;
+            let result = "";
+            
+            if (!debt || debt <= 0) {
+                result = "<span style='color: #ff6b6b;'>请输入有效的欠款金额！</span>";
+            } else {
+                if (payType === "once") {
+                    const fee = debt * 0.5;
+                    result = `<strong>一次性结清方案：</strong><br>
+                             服务费用：${fee.toFixed(2)} 元<br>
+                             <span style="color: #D4AF37;">注：费用以APP客服确认金额为准</span>`;
+                } else {
+                    const totalFee = debt * 0.55;
+                    const minPerMonth = 3000;
+                    
+                    // 计算分期期数，限制在3-12期
+                    let period = Math.floor(totalFee / minPerMonth);
+                    period = Math.max(3, Math.min(12, period)); // 确保期数在3-12之间
+                    
+                    const perMonth = (totalFee / period).toFixed(2);
+                    result = `<strong>分期还款方案：</strong><br>
+                             分期总费用：${totalFee.toFixed(2)} 元<br>
+                             分期期数：${period}期（最少3期，最多12期）<br>
+                             每期还款：约${perMonth}元<br>
+                             <span style="color: #D4AF37;">注：满足每期≥3000元要求，分期期数限制在3-12期</span>`;
+                }
+            }
+            document.getElementById("bankCoreResult").innerHTML = result;
+            
+            // 添加动画效果
+            anime({
+                targets: '#bankCoreResult',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 500,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        // 非银核心化债计算
+        function calcNonBankCore() {
+            const debt = Number(document.getElementById("nonBankDebt").value);
+            const depositRate = Number(document.querySelector('input[name="depositRate"]:checked').value);
+            let result = "";
+            
+            if (!debt || debt <= 0) {
+                result = "<span style='color: #ff6b6b;'>请输入有效的欠款金额！</span>";
+            } else {
+                // 保证金金额
+                const deposit = debt * (depositRate / 100);
+                // 期数和每期时长
+                let period = "";
+                if (depositRate === 3) period = "23期，每期3个月";
+                else if (depositRate === 5) period = "20期，每期3个月";
+                else if (depositRate === 10) period = "10期，每期2个月";
+                else if (depositRate === 20) period = "5期，每期2个月";
+                // 最终服务费
+                const serviceFee = debt * 0.4;
+                
+                result = `<strong>非银债务化债方案：</strong><br>
+                         保证金金额：${deposit.toFixed(2)} 元<br>
+                         代偿期数：${period}<br>
+                         最终服务费：${serviceFee.toFixed(2)} 元<br>
+                         <span style="color: #D4AF37;">注：先做后付费，保证金为前置小额费用，我司全额代偿欠款</span><br>
+                         <span style="color: #F5DEB3;">以法院文书金额为准</span>`;
+            }
+            document.getElementById("nonBankCoreResult").innerHTML = result;
+            
+            // 添加动画效果
+            anime({
+                targets: '#nonBankCoreResult',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 500,
+                easing: 'easeOutQuad'
+            });
+        }
+
+        // 页面加载完成后的动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // logo脉冲动画
+            anime({
+                targets: '.logo',
+                scale: [1, 1.05, 1],
+                duration: 2000,
+                loop: true,
+                easing: 'easeInOutSine'
+            });
+        });
+    </script>
+</body>
+</html>
